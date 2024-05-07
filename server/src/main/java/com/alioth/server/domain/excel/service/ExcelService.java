@@ -79,7 +79,7 @@ public class ExcelService {
     }
 
     // 계약 HQ 경우 code = null, 팀 코드 , 사원 코드
-    private void contractExcelHq(String code, HttpServletResponse response, ExcelReqDto dto
+    public void contractExcelHq(String code, HttpServletResponse response, ExcelReqDto dto
     ) throws IOException, IllegalAccessException {
         if (code == null || code.isEmpty()) {
             exportExcel(response, contractService.findAllContractsByPeriod(dto).stream().toList());
@@ -102,7 +102,7 @@ public class ExcelService {
     }
 
     // 계약 Manager 로그인한 사용자가 팀이있는경우, code = null, 사원 코드
-    private void contractExcelManager(SalesMembers salesMember, String code, HttpServletResponse response, ExcelReqDto dto
+    public void contractExcelManager(SalesMembers salesMember, String code, HttpServletResponse response, ExcelReqDto dto
     ) throws IOException, IllegalAccessException {
         teamExist(salesMember);
         if (code == null || code.isEmpty()) {
@@ -151,7 +151,7 @@ public class ExcelService {
     }
 
     // 고객 HQ 일 경우 code = null, 팀 코드, 사원 코드
-    private void customerListExcelHq(String code, HttpServletResponse response, ExcelReqDto dto
+    public void customerListExcelHq(String code, HttpServletResponse response, ExcelReqDto dto
     ) throws IOException, IllegalAccessException {
         if (code == null || code.isEmpty()) {
             List<Custom> allCustomers = contractService.customTotalList(dto);
@@ -212,7 +212,7 @@ public class ExcelService {
     }
 
     // 사원 HQ 일 경우  code = null , 팀 코드
-    private void salesMembersExcelHq(String code, HttpServletResponse response
+    public void salesMembersExcelHq(String code, HttpServletResponse response
     ) throws IOException, IllegalAccessException {
         if (code == null || code.isEmpty()) {
             List<SalesMemberResDto> list = salesMemberService.findAll();
@@ -261,4 +261,42 @@ public class ExcelService {
             throw new AccessDeniedException("잘못된 접근입니다.");
         }
     }
+
+
+ /*   public void salesExcel(SalesMembers salesMember, String code, HttpServletResponse response
+    ) throws IOException, IllegalAccessException {
+        switch (salesMember.getRank()) {
+            case HQ:
+                salesExcelHq(code, response);
+                break;
+            case MANAGER:
+                salesExcelManager(salesMember, response);
+                break;
+            case FP:
+                salesExcelFP(salesMember,response);
+                break;
+        }
+    }
+    public void salesExcelHq(String code, HttpServletResponse response
+    ) throws IOException, IllegalAccessException {
+        if (code == null || code.isEmpty()) {
+            List<> list = salesMemberService.findAll();
+            exportExcel(response, list);
+        } else if (Character.isLetter(code.charAt(0))) {
+            if (code.equals("NoTeam")) {
+                List<SalesMemberResDto> memberList = salesMemberService.getAllMembersByTeam(null).stream().map(typeChange::smToSmResDto).toList();
+                exportExcel(response, memberList);
+            } else {
+                Team team = teamService.findByTeamCode(code);
+                if (team.getDelYN().equals("N")) {
+                    List<SalesMemberResDto> memberList = teamService.findAllByTeamCode(code);
+                    exportExcel(response, memberList);
+                } else {
+                    throw new EntityNotFoundException("해체된 팀입니다.");
+                }
+            }
+        } else {
+            throw new IllegalAccessException("잘못된 접근입니다.");
+        }
+    }*/
 }

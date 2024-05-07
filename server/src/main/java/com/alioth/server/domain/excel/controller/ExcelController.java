@@ -7,6 +7,8 @@ import com.alioth.server.domain.member.service.SalesMemberService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -49,4 +51,20 @@ public class ExcelController {
                 break;
         }
     }
+
+
+/*
+    @PostMapping("/export/sales/{memberCode}/{date}")
+    public void downloadSalesExcel(@PathVariable Long memberCode,
+                                   @PathVariable String date) {
+
+        SalesMemberTotalPriceRedDto dto = salesMemberService.memberSalesPrice(memberCode, date);
+
+        return CommonResponse.responseMessage(
+                HttpStatus.OK,
+                "사원 매출 실적",
+                dto);
+    }
+*/
+
 }
